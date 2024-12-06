@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import NewUser
 from .forms import UserRegisterForm
 from django.urls import reverse_lazy
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 class UserListView(ListView):
@@ -33,5 +35,9 @@ class UserDeleteView(DeleteView):
   template_name = 'usuarios/user_delete.html'
   success_url = reverse_lazy('users')
 
+@login_required
+def logout_view(request):
+  logout(request)
+  return redirect('login')
 
 
