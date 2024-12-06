@@ -1,0 +1,37 @@
+{% load static %}
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<header>
+  <nav class="bg-blue-800 text-white p-4">
+    <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center">
+      <a href="#" class="text-lg font-bold">
+        <img src="{% static 'usuarios/logo_MCFC.png' %}" alt="Logo" class="w-14">
+      </a>
+      <ul class="flex items-center space-x-4">
+        <li><a href="{% url "users" %}" class="hover:text-gray-300">Jogadores</a></li>
+        <li><a href="#" class="hover:text-gray-300">Jogos</a></li>
+        <li><a href="#" class="hover:text-gray-300">Login</a></li>
+        <li><a href="{% url "user_create" %}" class="hover:text-gray-300">Cadastrar</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<body class="h-auto">
+  {% block content %}
+  {% endblock  %}
+</body>
+
+<footer class="relative w-full bottom-0 mt-auto">
+  <div class="bg-red-800 text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <p class="text-sm">2025 - Todos os direitos reservados MCFC</p>
+    </div>
+  </div>
+</footer>
+</html>

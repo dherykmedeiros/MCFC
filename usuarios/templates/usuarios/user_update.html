@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="ml-10 mt-10 text-black text-xl">{% if object %}Editar{% else %}Criar{% endif %} Usuario</h1>
+<div class="border bg-gray-100 p-4 overflow-x-auto">
+  <form class="min-w-full border border-gray-300 bg-white rounded-lg shadow flex flex-col" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <label class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+        {{field.label}}:
+      </label>
+      <input
+        type="{{ field.field.widget.input_type }}"
+        name="{{ field.html_name }}"
+        id="{{ field.id_for_label }}"
+        value="{{ field.value|default_if_none:"" }}"
+        class="px-4 py-2 text-base text-white border-b border-gray-300 bg-blue-500"
+      >
+    {% endfor %}
+    <button class="bg-red-500 cursor-pointer hover:underline" type="submit">Salvar</button>
+  </form>
+</div>
+  {% endblock %}
