@@ -135,4 +135,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'usuarios.NewUser'
 
-LOGIN_REDIRECT_URL = 'users'
+LOGIN_REDIRECT_URL = 'jogadores'

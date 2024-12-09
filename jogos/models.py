@@ -25,7 +25,9 @@ class Presenca(models.Model):
   data_confirmacao= models.DateTimeField(auto_now_add=True)
 
   class Meta:
-    unique_together = ('usuario', 'jogo')
-  
+    constraints = [
+      models.UniqueConstraint(fields=['usuario', 'jogo'], name='unique_usuario_jogo')
+    ]
+
   def __str__(self):
     return f"{self.usuario} - {self.jogo} ({'Confirmado' if self.confirmado else 'Não confirmado'})"

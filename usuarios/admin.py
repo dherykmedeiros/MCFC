@@ -8,4 +8,5 @@ from jogos.models import Jogo,Presenca
 admin.site.register(NewUser)
 admin.site.register(Jogador)
 admin.site.register(Jogo)
+admin.site.register(Presenca)
 
