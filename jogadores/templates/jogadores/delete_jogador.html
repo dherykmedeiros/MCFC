@@ -1,39 +1,37 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="flex justify-center bg-gray-200 space-x-2">
-  <h1 class="flex justify-center text-2xl">Jogador:</h1>
+  <h1 class="flex justify-center text-2xl">Excluir Jogador:</h1>
   <h1 class="flex justify-center text-2xl text-blue-800 ">{{ object.first_name }} {{ object.last_name }}</h1>
 </div>
 <h1 class="flex text-2xl mx-3">Informações do atleta:</h1>
 <div class="border bg-gray-100 p-4 overflow-x-auto">
   <div class="min-w-full border border-gray-300 flex flex-col rounded-lg shadow">
-    <div class="m-2">
-      <img class="w-20" src="{{ object.foto_perfil.url }}"></img>
-    </div>
     <div class="flex text-2xl text-red-600 m-2">
       <h2>Nome:</h2>
-      <p class="mx-2">{{ object.first_name }}</p>
+      <p class="mx-2">{{ object.jogador.first_name }}</p>
     </div>
     <div class="flex text-2xl text-red-600 m-2">
       <h2>Sobrenome:</h2>
-      <p class="mx-2">{{ object.last_name }}</p>
+      <p class="mx-2">{{ object.jogador.last_name }}</p>
     </div>
     <div class="flex text-2xl text-red-600 m-2">
       <h2>Email:</h2>
-      <p class="mx-2">{{ object.email }}</p>
+      <p class="mx-2">{{ object.jogador.email }}</p>
     </div>
     <div class="flex text-2xl text-red-600 m-2">
       <h2>Posição:</h2>
-      <p class="mx-2">{{ object.get_posicao_display }}</p>
+      <p class="mx-2">{{ object.jogador.get_posicao_display }}</p>
     </div>
-    {% if object.descricao == "" %}
-      <p></p>
-    {% else %}
-      <div class="text-2xl text-blue-600 m-2">
-        <h2 class="">Palavras pessoais:</h2>
-        <p class="">{{ object.descricao }}</p>
-      </div>
-    {% endif %}
+    <div class="flex text-2xl text-red-600 m-2">
+      <h2>Jogos:</h2>
+      <p class="mx-2">{{ object.jogos}}</p>
+    </div>
+    <form method='POST'>
+      {% csrf_token %}
+      <button type="submit" class="hover:bg-red-700 hover:text-white text-red-600 rounded-sm">Excluir</button>
+      <button class="hover:bg-red-700 hover:text-white text-red-600 rounded-sm"><a href="{% url "jogadores" %}">Cancelar</a></button>
+    </form>
   </div>
 </div>
 

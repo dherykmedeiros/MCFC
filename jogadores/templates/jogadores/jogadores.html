@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="flex justify-center text-2xl">Lista de Jogadores</h1>
+
+  <div class="overflow-x-auto p-4 bg-gray-100" >
+    <table class="min-w-full border border-gray-300 bg-white rounded-lg shadow">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Nome
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Jogos
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Gols
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Assistencias
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Jogos sem tomar gol
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Mais informações
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Atualizar
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Excluir
+          </th>
+        </tr>
+      </thead>
+      {% for jogador in jogadores %}
+      <tbody>
+        <tr class="hover:bg-gray-100">
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogador.jogador.first_name }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogador.jogos }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogador.gols }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogador.assistencias }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogador.clean_sheet }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            <a 
+              class="text-blue-500 hover:underline" 
+              href="{% url 'detalhe_jogador' jogador.id %}">
+              Info
+            </a>
+            <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+              <a 
+                class="text-blue-500 hover:underline" 
+                href="{% url 'atualizar_jogador' jogador.id %}">
+                Editar
+              </a>
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            <a 
+              class="text-blue-500 hover:underline" 
+              href="{% url 'deletar_jogador' jogador.id %}">
+              Deletar
+            </a>
+        </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+  
+{% endblock %}

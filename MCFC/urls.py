@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django.urls import path, include
 from usuarios import urls
+from jogadores import urls as urls_jogadores
 from django.conf.urls.static import static
 from django.conf import settings 
 from django.contrib.auth.views import LoginView, LogoutView
@@ -12,6 +13,7 @@ urlpatterns = [
     path('users/', include(urls)),
     path('login/', LoginView.as_view(template_name='usuarios/login.html'), name='login'),
     path('logout/', logout_view, name='logout'),
+    path('jogadores/', include(urls_jogadores)),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
