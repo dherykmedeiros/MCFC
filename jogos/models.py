@@ -1,8 +1,10 @@
 from django.db import models
 from usuarios.models import NewUser
+import uuid
 
 # Create your models here.
 class Jogo(models.Model):
+  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   titulo = models.CharField(max_length=150)
   local = models.CharField(max_length=150)
   data_jogo = models.DateField()

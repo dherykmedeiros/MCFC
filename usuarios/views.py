@@ -16,6 +16,7 @@ class UserDetailView(DetailView):
   model = NewUser
   template_name = 'usuarios/user_detail.html'
   context_object_name = 'user'
+  pk_url_kwarg = 'id'
   slug_field = 'username'
 
 class UserCreateView(CreateView):
@@ -27,12 +28,14 @@ class UserCreateView(CreateView):
 class UserUpdateView(UpdateView):
   model = NewUser
   template_name = 'usuarios/user_update.html'
+  pk_url_kwarg = 'id'
   fields = ['username', 'first_name','last_name','posicao','descricao','foto_perfil']
   success_url = reverse_lazy('users')
 
 class UserDeleteView(DeleteView):
   model = NewUser
   template_name = 'usuarios/user_delete.html'
+  pk_url_kwarg = 'id'
   success_url = reverse_lazy('users')
 
 @login_required

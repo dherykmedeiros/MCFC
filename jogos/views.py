@@ -16,6 +16,7 @@ class JogoListView(ListView):
 class JogoDetailView(DetailView):
   model = Jogo
   template_name = 'jogos/jogo.html'
+  pk_url_kwarg = 'id'
   context_object_name = 'jogo'
   
 class JogoCreateView(CreateView):
@@ -28,10 +29,12 @@ class JogoUpdateView(UpdateView):
   model = Jogo
   fields = '__all__'
   template_name = 'jogos/atualizar_jogo.html'
+  pk_url_kwarg = 'id'
   success_url = reverse_lazy('jogos')
 
 class JogoDeleteView(DeleteView):
   model = Jogo
   template_name = 'jogos/deletar_jogo.html'
+  pk_url_kwarg = 'id'
   success_url = reverse_lazy('jogos')
-  
+

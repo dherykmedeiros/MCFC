@@ -14,12 +14,12 @@
       </a>
       <ul class="flex items-center space-x-4">
         {% if user.is_authenticated %}
-          <li><a href="{% url "users" %}" class="hover:text-gray-300">Jogadores</a></li>
-          <li><a href="#" class="hover:text-gray-300">Jogos</a></li>
+          <li><a href="{% url "jogadores" %}" class="hover:text-gray-300">Jogadores</a></li>
+          <li><a href="{% url "jogos" %}" class="hover:text-gray-300">Jogos</a></li>
           <li><a href="{% url "logout" %}" class="hover:text-gray-300">Logout</a></li>
         {% else %}
-          <li><a href="{% url "users" %}" class="hover:text-gray-300">Jogadores</a></li>
-          <li><a href="#" class="hover:text-gray-300">Jogos</a></li>
+          <li><a href="{% url "jogadores" %}" class="hover:text-gray-300">Jogadores</a></li>
+          <li><a href="{% url "jogos" %}" class="hover:text-gray-300">Jogos</a></li>
           <li><a href="{% url "login" %}" class="hover:text-gray-300">Login</a></li>
           <li><a href="{% url "user_create" %}" class="hover:text-gray-300">Cadastrar</a></li>
         {% endif %}

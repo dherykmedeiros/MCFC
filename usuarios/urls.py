@@ -1,11 +1,14 @@
 from django.urls import path
 from .views import UserCreateView, UserListView, UserDetailView, UserUpdateView, UserDeleteView
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required,user_passes_test
+
+def is_admin(user):
+  return user.groups.filter(name='administrativo').exists()
 
 urlpatterns = [
-    path('create/', UserCreateView.as_view(), name='user_create'),
-    path('', UserListView.as_view(), name='users'),
-    path('detail/<int:pk>/', login_required(UserDetailView.as_view()), name='user_detail'),
-    path('update/<int:pk>/', UserUpdateView.as_view(), name='user_update'),
-    path('delete/<int:pk>/', UserDeleteView.as_view(), name='user_delete'),
+    path('create/', login_required(user_passes_test(is_admin)(UserCreateView.as_view())), name='user_create'),
+    path('', login_required(user_passes_test(is_admin)(UserListView.as_view())), name='users'),
+    path('detail/<uuid:id>/', login_required(user_passes_test(is_admin)(UserDetailView.as_view())), name='user_detail'),
+    path('update/<uuid:id>/', login_required(user_passes_test(is_admin)(UserUpdateView.as_view())), name='user_update'),
+    path('delete/<uuid:id>/', login_required(user_passes_test(is_admin)(UserDeleteView.as_view())), name='user_delete'),
 ]

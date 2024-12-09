@@ -22,6 +22,7 @@ class CreateJogadorView(CreateView):
 class DetailJogadorView(DetailView):
   model = Jogador
   template_name = "jogadores/jogador.html"
+  pk_url_kwarg = 'id'
   context_object_name = "jogador"
 
 class UpdateJogadorView(UpdateView):
@@ -29,10 +30,12 @@ class UpdateJogadorView(UpdateView):
   fields = '__all__'
   template_name = "jogadores/atualizar_jogador.html"
   context_object_name = "atualizar_jogador"
+  pk_url_kwarg = 'id'
   success_url = reverse_lazy('jogadores')
 
 class DeleteJogadorView(DeleteView):
   model = Jogador
   template_name = "jogadores/delete_jogador.html"
   context_object_name = "deletar_jogador"
+  pk_url_kwarg = 'id'
   success_url = reverse_lazy('jogadores')

@@ -1,8 +1,14 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.models import Group
 from django import forms
 from .models import NewUser
 
 class UserRegisterForm(UserCreationForm):
+  groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required= False
+    )
   email = forms.EmailField()
   class Meta:
     model = NewUser
