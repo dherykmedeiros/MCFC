@@ -16,6 +16,7 @@ class CreateJogadorView(CreateView):
   fields = '__all__'
   context_object_name = "cadastrar_jogador"
   success_url = reverse_lazy('jogadores')
+  queryset = Jogador.objects.all()
 
 
 class DetailJogadorView(DetailView):

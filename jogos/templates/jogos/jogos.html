@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="flex justify-center text-2xl">Lista de Jogos</h1>
+
+  <div class="overflow-x-auto p-4 bg-gray-100" >
+    <table class="min-w-full border border-gray-300 bg-white rounded-lg shadow">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Titulo
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Data
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Hora
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Mais informações
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Atualizar
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Excluir
+          </th>
+        </tr>
+      </thead>
+      {% for jogo in jogos %}
+      <tbody>
+        <tr class="hover:bg-gray-100">
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogo.titulo }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogo.data_jogo }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogo.hora_jogo }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            <a 
+              class="text-blue-500 hover:underline" 
+              href="{% url 'jogo' jogo.id %}">
+              Info
+            </a>
+            <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+              <a 
+                class="text-blue-500 hover:underline" 
+                href="{% url 'atualizar_jogo' jogo.id %}">
+                Editar
+              </a>
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            <a 
+              class="text-blue-500 hover:underline" 
+              href="{% url 'deletar_jogo' jogo.id %}">
+              Deletar
+            </a>
+        </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+  
+{% endblock %}

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usuarios',
     'jogadores',
+    'jogos',
 ]
 
 MIDDLEWARE = [
@@ -121,7 +122,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'staticfiles'
-  ]
+    ]
 STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = "/media/"
