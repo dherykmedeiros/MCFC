@@ -16,6 +16,7 @@ class NewUser(AbstractUser):
   )
   posicao = models.CharField(max_length=3, choices=posicoes,blank=False,null=False)
   descricao = models.TextField(blank=True,null=True)
+  foto_perfil = models.ImageField(upload_to='fotos/',blank=True, null=True)
 
   def __str__(self):
     return self.username

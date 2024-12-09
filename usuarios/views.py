@@ -27,7 +27,7 @@ class UserCreateView(CreateView):
 class UserUpdateView(UpdateView):
   model = NewUser
   template_name = 'usuarios/user_update.html'
-  fields = ['username', 'first_name','last_name','posicao','descricao']
+  fields = ['username', 'first_name','last_name','posicao','descricao','foto_perfil']
   success_url = reverse_lazy('users')
 
 class UserDeleteView(DeleteView):

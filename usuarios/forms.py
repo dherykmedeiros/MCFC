@@ -6,7 +6,7 @@ class UserRegisterForm(UserCreationForm):
   email = forms.EmailField()
   class Meta:
     model = NewUser
-    fields = ['username','first_name','last_name', 'email', 'password1', 'password2','posicao','descricao']
+    fields = ['username','first_name','last_name', 'email', 'password1', 'password2','posicao','descricao','foto_perfil']
     widgets = {
             'username': forms.TextInput(attrs={
                 'class': 'px-4 py-2 text-base text-gray-700 border border-gray-300 rounded-md',
