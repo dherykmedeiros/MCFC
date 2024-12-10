@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Jogo, Presenca
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
+
+
 
 # Create your views here.
 
@@ -55,17 +57,32 @@ class PresencaListView(ListView):
     context['jogo'] = jogo
     return context
 
-class PresencaCreateView(CreateView):
-  model = Presenca
-  fields = '__all__'
-  template_name = 'presencas/cadastrar_presenca.html'
-  def form_valid(self, form):
-    jogo = get_object_or_404(Jogo, id=self.kwargs['jogo_id'])
-    form.instance.jogo = jogo
+def criar_presenca(jogo, usuario, confirmado=False):
+    # Verificar duplicatas
+    if Presenca.objects.filter(jogo=jogo, usuario=usuario).exists():
+        return {"success": False, "detail": "Você já marcou presença neste jogo."}
+    
+    # Criar a presença
+    presenca = Presenca.objects.create(jogo=jogo, usuario=usuario, confirmado=confirmado)
+    return {"success": True, "presenca": presenca}
 
-    form.instance.usuario = self.request.user
-    return super().form_valid(form)
+class MarcarPresencaView(View):
+    def get(self, request, *args, **kwargs):
+        jogo_id = kwargs['jogo_id']
+        jogo = get_object_or_404(Jogo, id=jogo_id)
+        return render(request, "presencas/cadastrar_presenca.html", {"jogo": jogo})
+    
+    def post(self, request, *args, **kwargs):
+        jogo_id = kwargs['jogo_id']
+        jogo = get_object_or_404(Jogo, id=jogo_id)
+        confirmado = request.POST.get("confirmado","off") == "on"
+        
+        # Reutilizando a lógica
+        resultado = criar_presenca(jogo, request.user, confirmado=confirmado)
+        
+        if not resultado["success"]:
+            return render(request, "presencas/erro.html", {"error": resultado["detail"]})
+        
+        return redirect("presencas", jogo_id=jogo.id)
 
-  def get_success_url(self):
-    return reverse_lazy('presencas', kwargs={'jogo_id': self.kwargs['jogo_id']})
-
+  

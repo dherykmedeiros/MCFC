@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import JogoCreateView, JogoListView, JogoDetailView, JogoDeleteView, JogoUpdateView, PresencaListView, PresencaCreateView
+from .views import JogoCreateView, JogoListView, JogoDetailView, JogoDeleteView, JogoUpdateView, PresencaListView,MarcarPresencaView
 
 urlpatterns = [
     path('',JogoListView.as_view(),name='jogos'),
@@ -8,5 +8,5 @@ urlpatterns = [
     path('atualizar/<uuid:id>',JogoUpdateView.as_view(),name='atualizar_jogo'),
     path('deletar/<uuid:id>',JogoDeleteView.as_view(),name='deletar_jogo'),
     path('presencas/<uuid:jogo_id>' ,PresencaListView.as_view(), name='presencas' ),
-    path('marcar_presenca/<uuid:jogo_id>',PresencaCreateView.as_view(),name='marcar_presenca')
+    path('marcar_presenca/<uuid:jogo_id>',MarcarPresencaView.as_view(),name='marcar_presenca')
 ]

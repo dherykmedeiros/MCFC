@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="flex justify-center text-2xl text-blue-800 ">Erro ao Marcar Presença</h1>
+<p class="flex justify-center text-2xl text-red-800 ">{{ error }}</p>
+<a href="{% url 'jogos' %}" class="bg-red-500 cursor-pointer hover:underline flex justify-center">Voltar para a lista de jogos</a>
+{% endblock %}
