@@ -19,6 +19,7 @@ class Jogo(models.Model):
     return f"{self.titulo} - {self.data_jogo}"
   
 class Presenca(models.Model):
+  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE,related_name='presencas')
   usuario = models.ForeignKey(NewUser, on_delete=models.CASCADE,related_name='presencas')
   confirmado = models.BooleanField(default=False)

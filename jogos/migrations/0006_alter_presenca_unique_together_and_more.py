@@ -2,6 +2,30 @@
 
 from django.conf import settings
 from django.db import migrations, models
+import uuid
+
+def migrate_to_uuid(apps, schema_editor):
+    Presenca = apps.get_model('jogos', 'Presenca')
+
+    # Itera sobre todos os registros e define o UUID no novo campo
+    for presenca in Presenca.objects.all():
+        presenca.id = uuid.uuid4()
+        presenca.save()
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('jogos', 'migração_anterior'),
+    ]
+
+    operations = [
+        migrations.AlterField(
+            model_name='presenca',
+            name='id',
+            field=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),
+        ),
+        migrations.RunPython(migrate_to_uuid),
+    ]
 
 
 class Migration(migrations.Migration):

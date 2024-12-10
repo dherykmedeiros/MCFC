@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Editar Presença</h1>
+<p>Jogo: {{ presenca.jogo }}</p>
+<p>Usuário: {{ presenca.usuario }}</p>
+<form method="post">
+    {% csrf_token %}
+    <label>
+        <input type="checkbox" name="confirmado" {% if presenca.confirmado %}checked{% endif %}>
+        Confirmado
+    </label>
+    <button type="submit">Salvar Alterações</button>
+</form>
+{% endblock %}

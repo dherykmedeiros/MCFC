@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="flex justify-center text-2xl text-blue-800">Seja bem vindo ao Site do MCFC</h1>
+<h1 class="flex justify-center text-2xl">Acompanhe nossos jogos</h1>
+<div class="overflow-x-auto p-4 bg-gray-100" >
+  <table class="min-w-full border border-gray-300 bg-white rounded-lg shadow">
+    <thead class="bg-gray-200">
+        <tr>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Titulo
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Data
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Hora
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Mais informações
+          </th>
+        </tr>
+      </thead>
+      {% for jogo in jogos %}
+      <tbody>
+        <tr class="hover:bg-gray-100">
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogo.titulo }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogo.data_jogo }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            {{ jogo.hora_jogo }}
+          </td>
+          <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+            <a 
+            class="text-blue-500 hover:underline" 
+            href="{% url 'jogo' jogo.id %}">
+            Info
+          </a>
+          
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+  
+  <h1 class="flex justify-center text-2xl">Lista de Jogadores</h1>
+  
+  <div class="overflow-x-auto p-4 bg-gray-100" >
+    <table class="min-w-full border border-gray-300 bg-white rounded-lg shadow">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Nome
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Jogos
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Gols
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Assistencias
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Jogos sem tomar gol
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Mais informações
+          </th>
+          {% for jogador in jogadores %}
+          <tbody>
+            <tr class="hover:bg-gray-100">
+              <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+                {{ jogador.jogador.first_name }}
+              </td>
+              <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+                {{ jogador.jogos }}
+              </td>
+              <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+                {{ jogador.gols }}
+              </td>
+              <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+                {{ jogador.assistencias }}
+              </td>
+              <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+                {{ jogador.clean_sheet }}
+              </td>
+              <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+                <a 
+                class="text-blue-500 hover:underline" 
+                href="{% url 'detalhe_jogador' jogador.id %}">
+                Info
+              </a>
+            </tr>
+          </tbody>
+          {% endfor %}
+        </table>
+      </div>
+      <div class="w-1/2 flex flex-col  border border-gray-600 bg-gray-300 rounded-lg shadow">
+        <h2 class=" text-3xl text-blue-800">Sobre nós:</h2>
+        <p class="text-2xl text-blue-800">
+          Time do Antonio Bezerra com criação em 2022.<br>
+          Jogamos normalmente no horario das 18h na<br> 
+          Areninha do Rio Branco no Antonio Bezerra.<br>
+          Tabem fazemos jogamos amistosos em outros locais. </p>
+      </div>
+      {% endblock %}

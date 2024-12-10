@@ -84,5 +84,20 @@ class MarcarPresencaView(View):
             return render(request, "presencas/erro.html", {"error": resultado["detail"]})
         
         return redirect("presencas", jogo_id=jogo.id)
+    
+class EditarPresencaView(View):
+   def get(self,request,*args, **kwargs):
+      presenca_id = kwargs['presenca_id']
+      presenca = get_object_or_404(Presenca, id=presenca_id)
+      return render(request, "presencas/editar_presenca.html",{"presenca":presenca})
+   def post(self,request,*args,**kwargs):
+      presenca_id = kwargs['presenca_id']
+      presenca = get_object_or_404(Presenca, id=presenca_id)
+
+      presenca.confirmado = request.POST.get("confirmado","off") == "on"
+      presenca.save()
+
+      return redirect ("presencas", jogo_id=presenca.jogo.id)
+      
 
   
