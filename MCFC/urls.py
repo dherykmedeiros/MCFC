@@ -8,7 +8,7 @@ from django.conf.urls.static import static
 from django.conf import settings 
 from django.contrib.auth.views import LoginView, LogoutView
 from usuarios.views import logout_view
-from .views import home
+from .views import IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,7 +17,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('jogadores/', include(urls_jogadores)),
     path('jogos/', include(urls_jogos)),
-    path('',home,name='home')
+    path('',IndexView.as_view(),name='home')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

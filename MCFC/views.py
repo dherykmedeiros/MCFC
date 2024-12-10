@@ -1,7 +1,18 @@
 from django.shortcuts import render,redirect
-from jogos.views import JogoListView
-from jogadores.views import JogadorListView
+from django.views.generic import ListView
+from jogos.models import Jogo
+from jogadores.models import Jogador
 
 
-def home(request):
-  return render(request,'home/home.html')
+
+
+class IndexView(ListView):
+  template_name = 'home/home.html'
+  model = Jogo
+  context_object_name = 'jogos'
+
+  def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context["jogadores"] = Jogador.objects.all()
+      return context
+  

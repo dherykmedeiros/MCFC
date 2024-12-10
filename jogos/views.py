@@ -1,8 +1,10 @@
 from django.shortcuts import render,redirect
-from .models import Jogo, Presenca
+from .models import Jogo, Presenca, DesempenhoJogador
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.shortcuts import get_object_or_404
+from .forms import DesempenhoJogadorForm
+from django.http import HttpResponseRedirect
 
 
 
@@ -23,9 +25,24 @@ class JogoDetailView(DetailView):
   context_object_name = 'jogo'
 
   def get_context_data(self, **kwargs):
-     context = super().get_context_data(**kwargs)
-     context['presencas_confirmadas'] = Presenca.objects.filter(jogo=self.object, confirmado=True).select_related('usuario__jogador')
-     return context
+        context = super().get_context_data(**kwargs)
+        context['presencas_confirmadas'] = Presenca.objects.filter(jogo=self.object, confirmado=True).select_related('usuario__jogador')
+        
+        context['form'] = DesempenhoJogadorForm()
+        return context
+
+  def post(self, request, *args, **kwargs):
+      self.object = self.get_object()
+      form = DesempenhoJogadorForm(request.POST)
+      if form.is_valid():
+          desempenho = form.save(commit=False)
+          desempenho.jogo = self.object
+          desempenho.save()
+          return HttpResponseRedirect(reverse('jogo_detail', kwargs={'id': self.object.id}))
+      context = self.get_context_data()
+      context['form'] = form
+      return self.render_to_response(context)
+  
   
 class JogoCreateView(CreateView):
   model = Jogo

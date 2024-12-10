@@ -1,5 +1,6 @@
 from django.db import models
 from usuarios.models import NewUser
+from jogadores.models import Jogador
 import uuid
 
 # Create your models here.
@@ -17,6 +18,24 @@ class Jogo(models.Model):
 
   def __str__(self):
     return f"{self.titulo} - {self.data_jogo}"
+  
+
+class DesempenhoJogador(models.Model):
+  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+  jogo_dia = models.ForeignKey(Jogo, on_delete=models.CASCADE, related_name='desempenhos')
+  jogador = models.ForeignKey(Jogador, on_delete=models.CASCADE, related_name='desempenhos')
+  jogo = models.IntegerField(default=0)
+  gols = models.IntegerField(default=0)
+  assistencias = models.IntegerField(default=0)
+  mvp = models.BooleanField(default=False)
+  clean_sheet = models.BooleanField(default=False)
+
+  class Meta:
+    unique_together = ('jogo_dia', 'jogador')
+
+  def __str__(self):
+    return f"{self.jogador} - {self.jogo_dia}"
+
   
 class Presenca(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

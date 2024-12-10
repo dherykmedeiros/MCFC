@@ -1,51 +1,59 @@
 {% extends "base.html" %}
 {% block content %}
+
 <div class="flex justify-center bg-gray-200 space-x-2">
   <h1 class="flex justify-center text-2xl">Jogo:</h1>
-  <h1 class="flex justify-center text-2xl text-blue-800">{{ object.time_casa }} x {{ object.time_visitante }}</h1>
+  <h1 class="flex justify-center text-2xl text-blue-800">{{ jogo.time_casa }} x {{ jogo.time_visitante }}</h1>
 </div>
+
 <h1 class="flex text-2xl mx-3">Informações do Jogo:</h1>
 <div class="flex flex-row">
+  <!-- Informações do Jogo -->
   <div class="border bg-gray-100 p-4 overflow-x-auto">
     <div class="min-w-full border border-gray-300 flex flex-col rounded-lg shadow">
       <div class="m-2">
-        <img class="w-36" src="{{ object.arte_jogo.url }}" alt="Arte do Jogo"></img>
+        {% if jogo.arte_jogo %}
+          <img class="w-36" src="{{ jogo.arte_jogo.url }}" alt="Arte do Jogo"></img>
+        {% else %}
+          <p class="text-gray-500">Sem arte disponível</p>
+        {% endif %}
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Time da casa:</h2>
-        <p class="mx-2">{{ object.time_casa }}</p>
+        <p class="mx-2">{{ jogo.time_casa }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Time visitante:</h2>
-        <p class="mx-2">{{ object.time_visitante }}</p>
+        <p class="mx-2">{{ jogo.time_visitante }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Data:</h2>
-        <p class="mx-2">{{ object.data_jogo }}</p>
+        <p class="mx-2">{{ jogo.data_jogo }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Hora:</h2>
-        <p class="mx-2">{{ object.hora_jogo }}</p>
+        <p class="mx-2">{{ jogo.hora_jogo }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Local:</h2>
-        <p class="mx-2">{{ object.local }}</p>
+        <p class="mx-2">{{ jogo.local }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Placar Casa:</h2>
-        <p>{{ object.placar_casa }}</p>
+        <p>{{ jogo.placar_casa }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Placar Visitante:</h2>
-        <p>{{ object.placar_visitante }}</p>
+        <p>{{ jogo.placar_visitante }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Resumo:</h2>
-        <p>{{ object.time_casa }}: {{ object.placar_casa }} x {{ object.placar_visitante }}: {{ object.time_visitante }}</p>
+        <p>{{ jogo.time_casa }}: {{ jogo.placar_casa }} x {{ jogo.placar_visitante }}: {{ jogo.time_visitante }}</p>
       </div>
     </div>
   </div>
 
+  <!-- Presenças confirmadas e estatísticas -->
   <div class="border bg-gray-100 p-4 overflow-x-auto">
     <div class="min-w-full border border-gray-300 flex flex-col rounded-lg shadow">
       <h2 class="text-lg flex text-red-600 m-2">Presenças confirmadas</h2>
@@ -55,10 +63,14 @@
             <strong>{{ presenca.usuario.first_name }}</strong> - Confirmado
             {% if presenca.usuario.jogador %}
             <ul class="text-sm text-gray-700 mt-1">
-              <li>Gols: {{ presenca.usuario.jogador.gols|default:0 }}</li>
-              <li>Assistências: {{ presenca.usuario.jogador.assistencias|default:0 }}</li>
-              <li>Clean Sheets: {{ presenca.usuario.jogador.clean_sheet|default:0 }}</li>
-              <li>MVPs: {{ presenca.usuario.jogador.mvp|default:0 }}</li>
+              {% for desempenho in desempenhos %}
+                {% if desempenho.jogador == presenca.usuario.jogador %}
+                  <li>Gols: {{ desempenho.gols }}</li>
+                  <li>Assistências: {{ desempenho.assistencias }}</li>
+                  <li>Clean Sheets: {{ desempenho.clean_sheet|yesno:"Sim,Não" }}</li>
+                  <li>MVP: {{ desempenho.mvp|yesno:"Sim,Não" }}</li>
+                {% endif %}
+              {% endfor %}
             </ul>
             {% else %}
             <p class="text-sm text-gray-500">Sem informações adicionais do jogador.</p>
@@ -71,4 +83,5 @@
     </div>
   </div>
 </div>
+
 {% endblock %}
