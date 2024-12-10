@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Editar Presença</h1>
-<p>Jogo: {{ presenca.jogo }}</p>
-<p>Usuário: {{ presenca.usuario }}</p>
-<form method="post">
+<h1 class="flex justify-center text-2xl text-blue-800 ">Marcar Presença no Jogo</h1>
+<p class="flex justify-center text-2xl text-blue-800 ">Jogo: {{ jogo }}</p>
+<form method="post" class="flex justify-center flex-col">
     {% csrf_token %}
-    <label>
-        <input type="checkbox" name="confirmado" {% if presenca.confirmado %}checked{% endif %}>
-        Confirmado
+    <label class=" text-2xl text-blue-800 flex justify-center ">
+        <input class="w-5" type="checkbox" name="confirmado" {% if presenca.confirmado %}checked{% endif %} >
+        Confirmar Presença
     </label>
-    <button type="submit">Salvar Alterações</button>
+    <button class="bg-red-500 cursor-pointer hover:underline" type="submit">Salvar alteração</button>
 </form>
 {% endblock %}

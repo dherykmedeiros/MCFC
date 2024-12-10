@@ -24,6 +24,12 @@
           <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
             Excluir
           </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Jogadores Confirmados
+          </th>
+          <th class="px-4 py-2 text-left text-sm font-medium text-gray-700 border-b border-gray-300">
+            Marcar Presença
+          </th>
         </tr>
       </thead>
       {% for jogo in jogos %}
@@ -62,9 +68,16 @@
           <a 
             class="text-blue-500 hover:underline" 
             href="{% url 'presencas' jogo.id %}">
-            Deletar
+            Ver Jogadores
           </a>
-      </td>
+        </td>
+        <td class="px-4 py-2 text-sm text-gray-600 border-b border-gray-300">
+          <a 
+            class="text-blue-500 hover:underline" 
+            href="{% url 'marcar_presenca' jogo.id %}">
+            Marcar
+          </a>
+        </td>
         </tr>
       </tbody>
       {% endfor %}

@@ -2,48 +2,73 @@
 {% block content %}
 <div class="flex justify-center bg-gray-200 space-x-2">
   <h1 class="flex justify-center text-2xl">Jogo:</h1>
-  <h1 class="flex justify-center text-2xl text-blue-800 ">{{ object.time_casa }} x {{ object.time_visitante }}</h1>
+  <h1 class="flex justify-center text-2xl text-blue-800">{{ object.time_casa }} x {{ object.time_visitante }}</h1>
 </div>
 <h1 class="flex text-2xl mx-3">Informações do Jogo:</h1>
-<div class="border bg-gray-100 p-4 overflow-x-auto">
-  <div class="min-w-full border border-gray-300 flex flex-col rounded-lg shadow">
-    <div class="m-2">
-      <img class="w-36" src="{{ object.arte_jogo.url }}"></img>
-    </div>
-    <div class="flex text-2xl text-red-600 m-2">
-      <h2>Time da casa:</h2>
-      <p class="mx-2">{{ object.time_casa }}</p>
-    </div>
-    <div class="flex text-2xl text-red-600 m-2">
-      <h2>Time visitante:</h2>
-      <p class="mx-2">{{ object.time_visitante }}</p>
-    </div>
-    <div class="flex text-2xl text-red-600 m-2">
-      <h2>Data:</h2>
-      <p class="mx-2">{{ object.data_jogo}}</p>
-    </div>
-    <div class="flex text-2xl text-red-600 m-2">
-      <h2>Hora:</h2>
-      <p class="mx-2">{{ object.hora_jogo }}</p>
-    </div>
-    <div class="flex text-2xl text-red-600 m-2">
-      <h2>local:</h2>
-      <p class="mx-2">{{ object.local }}</p>
-    </div>
+<div class="flex flex-row">
+  <div class="border bg-gray-100 p-4 overflow-x-auto">
+    <div class="min-w-full border border-gray-300 flex flex-col rounded-lg shadow">
+      <div class="m-2">
+        <img class="w-36" src="{{ object.arte_jogo.url }}" alt="Arte do Jogo"></img>
+      </div>
       <div class="flex text-2xl text-red-600 m-2">
-        <h2 class="">Placar Casa:</h2>
-        <p class="">{{ object.placar_casa }}</p>
+        <h2>Time da casa:</h2>
+        <p class="mx-2">{{ object.time_casa }}</p>
+      </div>
+      <div class="flex text-2xl text-red-600 m-2">
+        <h2>Time visitante:</h2>
+        <p class="mx-2">{{ object.time_visitante }}</p>
+      </div>
+      <div class="flex text-2xl text-red-600 m-2">
+        <h2>Data:</h2>
+        <p class="mx-2">{{ object.data_jogo }}</p>
+      </div>
+      <div class="flex text-2xl text-red-600 m-2">
+        <h2>Hora:</h2>
+        <p class="mx-2">{{ object.hora_jogo }}</p>
+      </div>
+      <div class="flex text-2xl text-red-600 m-2">
+        <h2>Local:</h2>
+        <p class="mx-2">{{ object.local }}</p>
+      </div>
+      <div class="flex text-2xl text-red-600 m-2">
+        <h2>Placar Casa:</h2>
+        <p>{{ object.placar_casa }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Placar Visitante:</h2>
-        <p class="mx-2">{{ object.placar_visitante }}</p>
+        <p>{{ object.placar_visitante }}</p>
       </div>
       <div class="flex text-2xl text-red-600 m-2">
         <h2>Resumo:</h2>
-        <p class="mx-2">{{ object.time_casa }}: {{ object.placar_casa }} x {{ object.placar_visitante }}: {{ object.time_visitante }}</p>
+        <p>{{ object.time_casa }}: {{ object.placar_casa }} x {{ object.placar_visitante }}: {{ object.time_visitante }}</p>
       </div>
-    
+    </div>
+  </div>
+
+  <div class="border bg-gray-100 p-4 overflow-x-auto">
+    <div class="min-w-full border border-gray-300 flex flex-col rounded-lg shadow">
+      <h2 class="text-lg flex text-red-600 m-2">Presenças confirmadas</h2>
+      <ul>
+        {% for presenca in presencas_confirmadas %}
+          <li class="flex flex-col text-blue-600 m-2">
+            <strong>{{ presenca.usuario.first_name }}</strong> - Confirmado
+            {% if presenca.usuario.jogador %}
+            <ul class="text-sm text-gray-700 mt-1">
+              <li>Gols: {{ presenca.usuario.jogador.gols|default:0 }}</li>
+              <li>Assistências: {{ presenca.usuario.jogador.assistencias|default:0 }}</li>
+              <li>Clean Sheets: {{ presenca.usuario.jogador.clean_sheet|default:0 }}</li>
+              <li>MVPs: {{ presenca.usuario.jogador.mvp|default:0 }}</li>
+            </ul>
+            {% else %}
+            <p class="text-sm text-gray-500">Sem informações adicionais do jogador.</p>
+            {% endif %}
+          </li>
+        {% empty %}
+          <li class="text-gray-500">Não há presenças confirmadas</li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
 </div>
-
-{% endblock  %}
+{% endblock %}

@@ -9,5 +9,5 @@ urlpatterns = [
     path('deletar/<uuid:id>',JogoDeleteView.as_view(),name='deletar_jogo'),
     path('presencas/<uuid:jogo_id>' ,PresencaListView.as_view(), name='presencas' ),
     path('marcar_presenca/<uuid:jogo_id>',MarcarPresencaView.as_view(),name='marcar_presenca'),
-    path('editar_presenca/<uuid:id>/',EditarPresencaView.as_view(), name='editar_presenca')
+    path('editar_presenca/<uuid:presenca_id>/',EditarPresencaView.as_view(), name='editar_presenca')
 ]

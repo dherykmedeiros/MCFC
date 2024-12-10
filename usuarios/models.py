@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+
+
 import uuid
 
 # Create your models here.
@@ -22,6 +24,10 @@ class NewUser(AbstractUser):
 
   def __str__(self):
     return self.username
+  
+  def get_jogador(self):
+        """Retorna o jogador associado, se existir."""
+        return getattr(self, 'jogador', None)
 
 class Invitation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

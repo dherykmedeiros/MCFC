@@ -21,6 +21,11 @@ class JogoDetailView(DetailView):
   template_name = 'jogos/jogo.html'
   pk_url_kwarg = 'id'
   context_object_name = 'jogo'
+
+  def get_context_data(self, **kwargs):
+     context = super().get_context_data(**kwargs)
+     context['presencas_confirmadas'] = Presenca.objects.filter(jogo=self.object, confirmado=True).select_related('usuario__jogador')
+     return context
   
 class JogoCreateView(CreateView):
   model = Jogo
