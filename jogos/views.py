@@ -27,7 +27,7 @@ class JogoDetailView(DetailView):
   def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['presencas_confirmadas'] = Presenca.objects.filter(jogo=self.object, confirmado=True).select_related('usuario__jogador')
-        
+        context['desempenhos'] = DesempenhoJogador.objects.filter(jogo_dia=self.object).select_related('jogador')
         context['form'] = DesempenhoJogadorForm()
         return context
 
@@ -36,9 +36,9 @@ class JogoDetailView(DetailView):
       form = DesempenhoJogadorForm(request.POST)
       if form.is_valid():
           desempenho = form.save(commit=False)
-          desempenho.jogo = self.object
+          desempenho.jogo_dia = self.object
           desempenho.save()
-          return HttpResponseRedirect(reverse('jogo_detail', kwargs={'id': self.object.id}))
+          return HttpResponseRedirect(reverse('jogo', kwargs={'id': self.object.id}))
       context = self.get_context_data()
       context['form'] = form
       return self.render_to_response(context)

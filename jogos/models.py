@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from usuarios.models import NewUser
 from jogadores.models import Jogador
 import uuid
@@ -36,6 +38,24 @@ class DesempenhoJogador(models.Model):
   def __str__(self):
     return f"{self.jogador} - {self.jogo_dia}"
 
+@receiver(post_save, sender=DesempenhoJogador)
+def atualizar_estatisticas_jogador(sender, instance, **kwargs):
+  jogador = instance.jogador
+
+    
+  jogador.jogos = (jogador.jogos or 0) + 1
+
+  jogador.gols = (jogador.gols or 0) + instance.gols
+
+  jogador.assistencias = (jogador.assistencias or 0) + instance.assistencias
+
+  if instance.mvp:
+    jogador.mvp = (jogador.mvp or 0) + 1
+
+  if instance.clean_sheet:
+    jogador.clean_sheet = (jogador.clean_sheet or 0) + 1
+
+  jogador.save()
   
 class Presenca(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

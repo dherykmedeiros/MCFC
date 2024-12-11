@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<button class="bg-blue-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-700">
+  <a href="{% url 'users' %}">Usuarios</a>
+</button>
+<button class="bg-blue-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-700">
+  <a href="{% url 'user_create' %}">Criar Usuario</a>
+</button>
+<button class="bg-blue-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-700">
+  <a href="{% url 'cadastrar_jogador' %}">Criar Jogador</a>
+</button>
+<button class="bg-blue-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-blue-700">
+  <a href="{% url 'criar_jogo' %}">Criar Jogo</a>
+</button>
+
+{% endblock %}

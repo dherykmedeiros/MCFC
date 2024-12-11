@@ -16,3 +16,6 @@ class IndexView(ListView):
       context["jogadores"] = Jogador.objects.all()
       return context
   
+
+def administrativo(request):
+   return render(request,'administrativo/administrativo.html')

@@ -13,8 +13,13 @@
         <img src="{% static 'usuarios/logo_MCFC.png' %}" alt="Logo" class="w-14">
       </a>
       <ul class="flex items-center space-x-4">
-        {% if user.is_authenticated %}
+        {% if user.groups.first.name == "administrativo" %}
           <li><a href="{% url "jogadores" %}" class="hover:text-gray-300">Jogadores</a></li>
+          <li><a href="{% url "jogos" %}" class="hover:text-gray-300">Jogos</a></li>
+          <li><a href="{% url "administrativo" %}" class="hover:text-gray-300">administrativo</a></li>
+          <li><a href="{% url "logout" %}" class="hover:text-gray-300">Logout</a></li>
+        {% elif user.is_authenticated %}
+        <li><a href="{% url "jogadores" %}" class="hover:text-gray-300">Jogadores</a></li>
           <li><a href="{% url "jogos" %}" class="hover:text-gray-300">Jogos</a></li>
           <li><a href="{% url "logout" %}" class="hover:text-gray-300">Logout</a></li>
         {% else %}

@@ -8,7 +8,11 @@ from django.conf.urls.static import static
 from django.conf import settings 
 from django.contrib.auth.views import LoginView, LogoutView
 from usuarios.views import logout_view
-from .views import IndexView
+from .views import IndexView, administrativo
+from django.contrib.auth.decorators import login_required,user_passes_test
+
+def is_admin(user):
+  return user.groups.filter(name='administrativo').exists()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,7 +21,8 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('jogadores/', include(urls_jogadores)),
     path('jogos/', include(urls_jogos)),
-    path('',IndexView.as_view(),name='home')
+    path('',IndexView.as_view(),name='home'),
+    path('administrativo/',administrativo, name='administrativo'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
