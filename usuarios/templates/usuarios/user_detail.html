@@ -40,6 +40,7 @@
         <p class="">{{ object.descricao }}</p>
       </div>
     {% endif %}
+    <button class="hover:bg-red-700 hover:text-white text-red-600 rounded-sm"><a href="{% url "user_update" user.id %}">Editar Perfil</a></button>
   </div>
 </div>
 

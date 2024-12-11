@@ -16,4 +16,4 @@ class Jogador(models.Model):
 
 
   def __str__(self):
-    return self.jogador.username
+    return self.jogador.first_name

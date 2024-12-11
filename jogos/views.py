@@ -5,6 +5,7 @@ from django.urls import reverse_lazy,reverse
 from django.shortcuts import get_object_or_404
 from .forms import DesempenhoJogadorForm
 from django.http import HttpResponseRedirect
+from jogadores.models import Jogador
 
 
 
@@ -26,22 +27,55 @@ class JogoDetailView(DetailView):
 
   def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['presencas_confirmadas'] = Presenca.objects.filter(jogo=self.object, confirmado=True).select_related('usuario__jogador')
-        context['desempenhos'] = DesempenhoJogador.objects.filter(jogo_dia=self.object).select_related('jogador')
-        context['form'] = DesempenhoJogadorForm()
+        presencas_confirmadas = Presenca.objects.filter(
+            jogo=self.object, confirmado=True
+        ).select_related('usuario__jogador')
+
+        jogadores_confirmados = Jogador.objects.filter(
+            jogador__in=[p.usuario for p in presencas_confirmadas]
+        )
+
+        context['presencas_confirmadas'] = presencas_confirmadas
+        context['desempenhos'] = DesempenhoJogador.objects.filter(
+            jogo_dia=self.object
+        ).select_related('jogador')
+        context['form'] = DesempenhoJogadorForm(
+            jogadores_confirmados=jogadores_confirmados,
+            jogo=self.object
+        )
         return context
 
   def post(self, request, *args, **kwargs):
-      self.object = self.get_object()
-      form = DesempenhoJogadorForm(request.POST)
-      if form.is_valid():
-          desempenho = form.save(commit=False)
-          desempenho.jogo_dia = self.object
-          desempenho.save()
-          return HttpResponseRedirect(reverse('jogo', kwargs={'id': self.object.id}))
-      context = self.get_context_data()
-      context['form'] = form
-      return self.render_to_response(context)
+    self.object = self.get_object()
+    presencas_confirmadas = Presenca.objects.filter(
+        jogo=self.object, confirmado=True
+    ).select_related('usuario')
+
+    jogadores_confirmados = Jogador.objects.filter(
+        jogador__in=[p.usuario for p in presencas_confirmadas]
+    )
+
+    form = DesempenhoJogadorForm(
+        request.POST, 
+        jogadores_confirmados=jogadores_confirmados, 
+        jogo=self.object
+    )
+    if form.is_valid():
+        desempenho = form.save(commit=False)
+        desempenho.jogo_dia = self.object  # Assegura que o campo está associado
+        # Opcional: vincular à presença
+        try:
+            presenca = Presenca.objects.get(jogo=self.object, usuario=desempenho.jogador.usuario)
+            desempenho.presenca = presenca
+        except Presenca.DoesNotExist:
+            desempenho.presenca = None  # Ou tome outra ação adequada
+
+        desempenho.save()
+        return HttpResponseRedirect(reverse('jogo', kwargs={'id': self.object.id}))
+    
+    context = self.get_context_data()
+    context['form'] = form
+    return self.render_to_response(context)
   
   
 class JogoCreateView(CreateView):

@@ -20,12 +20,27 @@ class Jogo(models.Model):
 
   def __str__(self):
     return f"{self.titulo} - {self.data_jogo}"
-  
+
+class Presenca(models.Model):
+  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+  jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE,related_name='presencas')
+  usuario = models.ForeignKey(NewUser, on_delete=models.CASCADE,related_name='presencas')
+  confirmado = models.BooleanField(default=False)
+  data_confirmacao= models.DateTimeField(auto_now_add=True)
+
+  class Meta:
+    constraints = [
+      models.UniqueConstraint(fields=['usuario', 'jogo'], name='unique_usuario_jogo')
+    ]
+
+  def __str__(self):
+    return f"{self.usuario} - {self.jogo} ({'Confirmado' if self.confirmado else 'Não confirmado'})"
 
 class DesempenhoJogador(models.Model):
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   jogo_dia = models.ForeignKey(Jogo, on_delete=models.CASCADE, related_name='desempenhos')
   jogador = models.ForeignKey(Jogador, on_delete=models.CASCADE, related_name='desempenhos')
+  presenca = models.ForeignKey(Presenca, on_delete=models.CASCADE, related_name='desempenhos', null=True, blank=True)
   jogo = models.IntegerField(default=0)
   gols = models.IntegerField(default=0)
   assistencias = models.IntegerField(default=0)
@@ -57,17 +72,3 @@ def atualizar_estatisticas_jogador(sender, instance, **kwargs):
 
   jogador.save()
   
-class Presenca(models.Model):
-  id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-  jogo = models.ForeignKey(Jogo, on_delete=models.CASCADE,related_name='presencas')
-  usuario = models.ForeignKey(NewUser, on_delete=models.CASCADE,related_name='presencas')
-  confirmado = models.BooleanField(default=False)
-  data_confirmacao= models.DateTimeField(auto_now_add=True)
-
-  class Meta:
-    constraints = [
-      models.UniqueConstraint(fields=['usuario', 'jogo'], name='unique_usuario_jogo')
-    ]
-
-  def __str__(self):
-    return f"{self.usuario} - {self.jogo} ({'Confirmado' if self.confirmado else 'Não confirmado'})"

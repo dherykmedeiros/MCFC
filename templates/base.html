@@ -21,6 +21,7 @@
         {% elif user.is_authenticated %}
         <li><a href="{% url "jogadores" %}" class="hover:text-gray-300">Jogadores</a></li>
           <li><a href="{% url "jogos" %}" class="hover:text-gray-300">Jogos</a></li>
+          <li><a href="{% url "user_detail" user.id %}" class="hover:text-gray-300">Perfil</a></li>
           <li><a href="{% url "logout" %}" class="hover:text-gray-300">Logout</a></li>
         {% else %}
           <li><a href="{% url "jogadores" %}" class="hover:text-gray-300">Jogadores</a></li>
