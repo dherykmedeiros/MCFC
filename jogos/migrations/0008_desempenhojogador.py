@@ -8,25 +8,47 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('jogadores', '0005_alter_jogador_id'),
-        ('jogos', '0007_alter_presenca_id'),
+        ("jogadores", "0005_alter_jogador_id"),
+        ("jogos", "0007_alter_presenca_id"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DesempenhoJogador',
+            name="DesempenhoJogador",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('jogo', models.IntegerField(default=0)),
-                ('gols', models.IntegerField(default=0)),
-                ('assistencias', models.IntegerField(default=0)),
-                ('mvp', models.BooleanField(default=False)),
-                ('clean_sheet', models.BooleanField(default=False)),
-                ('jogador', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='desempenhos', to='jogadores.jogador')),
-                ('jogo_dia', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='desempenhos', to='jogos.jogo')),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("jogo", models.IntegerField(default=0)),
+                ("gols", models.IntegerField(default=0)),
+                ("assistencias", models.IntegerField(default=0)),
+                ("mvp", models.BooleanField(default=False)),
+                ("clean_sheet", models.BooleanField(default=False)),
+                (
+                    "jogador",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="desempenhos",
+                        to="jogadores.jogador",
+                    ),
+                ),
+                (
+                    "jogo_dia",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="desempenhos",
+                        to="jogos.jogo",
+                    ),
+                ),
             ],
             options={
-                'unique_together': {('jogo_dia', 'jogador')},
+                "unique_together": {("jogo_dia", "jogador")},
             },
         ),
     ]

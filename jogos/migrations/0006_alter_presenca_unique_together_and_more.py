@@ -4,25 +4,29 @@ from django.conf import settings
 from django.db import migrations, models
 import uuid
 
+
 def migrate_to_uuid(apps, schema_editor):
-    Presenca = apps.get_model('jogos', 'Presenca')
+    Presenca = apps.get_model("jogos", "Presenca")
 
     # Itera sobre todos os registros e define o UUID no novo campo
     for presenca in Presenca.objects.all():
         presenca.id = uuid.uuid4()
         presenca.save()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('jogos', 'migração_anterior'),
+        ("jogos", "migração_anterior"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='presenca',
-            name='id',
-            field=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False),
+            model_name="presenca",
+            name="id",
+            field=models.UUIDField(
+                primary_key=True, default=uuid.uuid4, editable=False
+            ),
         ),
         migrations.RunPython(migrate_to_uuid),
     ]
@@ -31,17 +35,19 @@ class Migration(migrations.Migration):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('jogos', '0005_rename_jogo_id_presenca_jogo'),
+        ("jogos", "0005_rename_jogo_id_presenca_jogo"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='presenca',
+            name="presenca",
             unique_together=set(),
         ),
         migrations.AddConstraint(
-            model_name='presenca',
-            constraint=models.UniqueConstraint(fields=('usuario', 'jogo'), name='unique_usuario_jogo'),
+            model_name="presenca",
+            constraint=models.UniqueConstraint(
+                fields=("usuario", "jogo"), name="unique_usuario_jogo"
+            ),
         ),
     ]

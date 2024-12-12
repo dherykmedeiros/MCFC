@@ -7,18 +7,29 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('usuarios', '0006_alter_newuser_foto_perfil'),
+        ("usuarios", "0006_alter_newuser_foto_perfil"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Invitation',
+            name="Invitation",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('token', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('email', models.EmailField(max_length=254, unique=True)),
-                ('used', models.BooleanField(default=False)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                (
+                    "token",
+                    models.UUIDField(default=uuid.uuid4, editable=False, unique=True),
+                ),
+                ("email", models.EmailField(max_length=254, unique=True)),
+                ("used", models.BooleanField(default=False)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

@@ -15,15 +15,29 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Jogador',
+            name="Jogador",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('jogos', models.IntegerField()),
-                ('gols', models.IntegerField()),
-                ('assistencias', models.IntegerField()),
-                ('clean_sheet', models.IntegerField()),
-                ('mvp', models.IntegerField()),
-                ('jogador', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("jogos", models.IntegerField()),
+                ("gols", models.IntegerField()),
+                ("assistencias", models.IntegerField()),
+                ("clean_sheet", models.IntegerField()),
+                ("mvp", models.IntegerField()),
+                (
+                    "jogador",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]

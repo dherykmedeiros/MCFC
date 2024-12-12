@@ -6,13 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('jogadores', '0002_alter_jogador_assistencias_alter_jogador_clean_sheet_and_more'),
+        (
+            "jogadores",
+            "0002_alter_jogador_assistencias_alter_jogador_clean_sheet_and_more",
+        ),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='jogador',
-            name='slug',
+            model_name="jogador",
+            name="slug",
             field=models.SlugField(blank=True, unique=True),
         ),
     ]
